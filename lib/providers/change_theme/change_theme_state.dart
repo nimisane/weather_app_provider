@@ -1,21 +1,29 @@
 part of 'change_theme_provider.dart';
 
-class ChangeThemeProvider with ChangeNotifier {
-  ChangeThemeState _state = ChangeThemeState.initial();
+enum AppTheme {
+  light,
+  dark,
+}
 
-  ChangeThemeState get state => _state;
+class ChangeThemeState extends Equatable {
+  const ChangeThemeState({required this.appTheme});
 
-  void update(WeatherProvider weatherProvider) {
-    if (weatherProvider.state.weatherModel.temp > kWarmOrNOt) {
-      _state = _state.copyWith(appTheme: AppTheme.light);
-    } else {
-      _state = _state.copyWith(appTheme: AppTheme.dark);
-    }
+  final AppTheme appTheme;
 
-    notifyListeners();
+  factory ChangeThemeState.initial() {
+    return const ChangeThemeState(appTheme: AppTheme.light);
   }
 
-  // final WeatherProvider weatherProvider;
+  @override
+  List<Object> get props => [appTheme];
 
-  // ChangeThemeProvider({required this.weatherProvider});
+  @override
+  String toString() {
+    return 'ChangeThemeState{appTheme=$appTheme}';
+  }
+
+  ChangeThemeState copyWith({AppTheme? appTheme}) {
+    return ChangeThemeState(appTheme: appTheme ?? this.appTheme);
+  }
 }
+

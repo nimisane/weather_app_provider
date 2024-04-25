@@ -35,17 +35,17 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider<TempSettingsProvider>(
           create: (context) => TempSettingsProvider(),
         ),
-        ChangeNotifierProxyProvider<WeatherProvider, ChangeThemeProvider>(
-          update: (context, value, previous) => previous!..update(value),
-          create: (context) => ChangeThemeProvider(),
+        ProxyProvider<WeatherProvider, ChangeThemeProvider>(
+          update: (BuildContext context,WeatherProvider value, _) => ChangeThemeProvider(weatherProvider: value),
+          // create: (context) => ChangeThemeProvider(),
         )
       ],
       builder: (context, _) => MaterialApp(
           title: 'Flutter Demo',
           theme: context.watch<ChangeThemeProvider>().state.appTheme ==
                   AppTheme.light
-              ? ThemeData.light()
-              : ThemeData.dark(),
+              ? ThemeData.light(useMaterial3: true)
+              : ThemeData.dark(useMaterial3: true),
           home: const HomePage() //MyHomePage(title: 'Flutter Demo Home Page'),
           ),
     );
