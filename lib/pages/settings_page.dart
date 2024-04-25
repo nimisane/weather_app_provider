@@ -20,7 +20,7 @@ class SettingsPage extends StatelessWidget {
           title: const Text('Temperature Unit'),
           subtitle: const Text('Celsius/Fahrenheit (Default: Celsius)'),
           trailing: Switch(
-            value: context.watch<TempSettingsProvider>().state.tempUnit ==
+            value: context.watch<TempSettingState>().tempUnit ==
                 TempUnit.celsius,
             onChanged: (_) {
               context.read<TempSettingsProvider>().toggleTempUnit();

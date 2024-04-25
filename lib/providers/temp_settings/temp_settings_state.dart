@@ -1,16 +1,29 @@
 part of 'temp_settings_provider.dart';
 
-class TempSettingsProvider with ChangeNotifier {
-  TempSettingState _state = TempSettingState.initial();
 
-  TempSettingState get state => _state;
+enum TempUnit {
+  celsius,
+  fahrenheit,
+}
 
-  void toggleTempUnit() {
-    _state = _state.copyWith(
-        tempUnit: TempUnit.celsius == state.tempUnit
-            ? TempUnit.fahrenheit
-            : TempUnit.celsius);
+class TempSettingState extends Equatable {
+  const TempSettingState({required this.tempUnit});
 
-    notifyListeners();
+  final TempUnit tempUnit;
+
+  factory TempSettingState.initial() {
+    return const TempSettingState(tempUnit: TempUnit.celsius);
+  }
+
+  @override
+  List<Object> get props => [tempUnit];
+
+  @override
+  String toString() {
+    return 'TempSettingState{tempUnit=$tempUnit}';
+  }
+
+  TempSettingState copyWith({TempUnit? tempUnit}) {
+    return TempSettingState(tempUnit: tempUnit ?? this.tempUnit);
   }
 }
