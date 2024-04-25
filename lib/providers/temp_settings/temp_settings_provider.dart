@@ -1,31 +1,21 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
+
+import 'package:flutter_state_notifier/flutter_state_notifier.dart';
 
 part 'temp_settings_state.dart';
 
-enum TempUnit {
-  celsius,
-  fahrenheit,
-}
 
-class TempSettingState extends Equatable {
-  const TempSettingState({required this.tempUnit});
+class TempSettingsProvider extends StateNotifier<TempSettingState> {
+  TempSettingsProvider():super(TempSettingState.initial());
 
-  final TempUnit tempUnit;
+  
 
-  factory TempSettingState.initial() {
-    return const TempSettingState(tempUnit: TempUnit.celsius);
-  }
+  void toggleTempUnit() {
+    state = state.copyWith(
+        tempUnit: TempUnit.celsius == state.tempUnit
+            ? TempUnit.fahrenheit
+            : TempUnit.celsius);
 
-  @override
-  List<Object> get props => [tempUnit];
-
-  @override
-  String toString() {
-    return 'TempSettingState{tempUnit=$tempUnit}';
-  }
-
-  TempSettingState copyWith({TempUnit? tempUnit}) {
-    return TempSettingState(tempUnit: tempUnit ?? this.tempUnit);
+   
   }
 }
